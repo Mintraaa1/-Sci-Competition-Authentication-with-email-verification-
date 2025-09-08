@@ -1,0 +1,14 @@
+FROM node:22-alpine
+
+WORKDIR /app
+
+COPY package*.json                      /*.. คือ relative */
+
+RUN npm imstall  -g nodemon && npm install
+
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["nodemon", "indext.js"]  /*cmd คือ command */
