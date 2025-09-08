@@ -1,22 +1,26 @@
 import sequelize from "./db.js";
-import Sequelize from "sequelize";
+import Sequelize from "sequelize"; //Sequelize คือ class  , sequelize คือ instance(lybrary)
 
 import User from "./user.model.js";
-import Role from "./role.model.js";
+import Activity from "./activity.model.js";
+import Teacher from "./teacher.model.js";
+import Jude from "./jude.model.js";
+import Admin from "./admin.model.js";
+import VerificationToken from "./verificationToken.model.js";
 
 const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User = User;
-db.Role = Role;
-
+db.User = User;  //model Uer  เป็น class  อาจารย์เลยตั้งเป็นพิมพ์ใหญ่
+db.Activity = Activity;
+db.Teacher = Teacher;
+db.Jude = Jude;
+db.Admin = Admin;
+db.VerificationToken = VerificationToken;
 //Association
-db.User.belongsToMany(db.Role, {
-  through: "user_roles",
-});
+db.VerificationToken.belongsTo(db.User, { foreignKey: "userId" });
+db.User.belongsTo(db.Activity, { through: "UserActivities" });
 
-db.Role.belongsToMany(db.User, {
-  through: "user_roles",
-});
+
 export default db;
