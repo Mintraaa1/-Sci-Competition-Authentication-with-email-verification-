@@ -17,6 +17,20 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const initDatebase = async () => {
+  try {
+    await db.sequelize.authenticate();
+    console.log("Database connection established successfully");
+    if(NODE_ENV === "development"){
+      await db.sequelize.sync({ alert: true });
+      console.log("database synced in development mode");
+    }
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+  }
+};
+initDatebase();
+
 import db from "./models/index.js";
 const role = db.Role;
 
